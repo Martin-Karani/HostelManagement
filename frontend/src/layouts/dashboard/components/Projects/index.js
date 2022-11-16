@@ -58,17 +58,37 @@ function Projects() {
       </MDBox>
       <MDBox>
         {[...Array(5)].map(() => (
-          <p
+          <div
             style={{
-              fontSize: "16px",
               marginLeft: "20px",
-              marginBottom: "10px",
+              marginBottom: "16px",
+              marginRight: "20px",
               backgroundColor: "#F7F5F3",
+              padding: "2px 15px",
               borderRadius: "5px",
             }}
           >
-            Reopening Sementer 2 is on 4th January for 1st Firsts
-          </p>
+            <h4 style={{ fontSize: "16px" }}>Reopening January</h4>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "300",
+              }}
+            >
+              Reopening Sementer 2 is on 4th January for 1st Firsts LayoutContainers r 1st Firsts
+              LayoutContainers
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                textAlign: "right",
+                color: "blue",
+                textDecoration: "italic",
+              }}
+            >
+              <i>19 February 2021</i>
+            </p>
+          </div>
         ))}
       </MDBox>
     </Card>

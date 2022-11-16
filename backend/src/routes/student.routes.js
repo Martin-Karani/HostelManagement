@@ -8,6 +8,8 @@ router.get("/", studentController.get);
 /* POST studentController */
 router.post("/signup", studentController.signUp);
 
+router.post("/login", studentController.signin);
+
 /* PUT studentController*/
 router.put("/:id", studentController.update);
 

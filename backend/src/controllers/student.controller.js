@@ -19,6 +19,15 @@ async function signUp(req, res, next) {
   }
 }
 
+async function signin(req, res, next) {
+  try {
+    await student.login(req.body);
+  } catch (err) {
+    console.error(`Error while logging student`, err.message);
+    next(err);
+  }
+}
+
 async function update(req, res, next) {
   try {
     res.json(await student.update(req.params.id, req.body));
@@ -42,4 +51,5 @@ module.exports = {
   signUp,
   update,
   remove,
+  signin,
 };
