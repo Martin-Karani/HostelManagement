@@ -36,6 +36,18 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { Navigate } from "react-router-dom";
+
+// eslint-disable-next-line react/prop-types
+function ProtectedRoute({ user, children }) {
+  if (!user) {
+    return <Navigate to="/authentication/sign-in" replace />;
+  }
+
+  return children;
+}
+
+const user = JSON.parse(localStorage.getItem("user"));
 
 const routes = [
   {
@@ -44,7 +56,11 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: (
+      <ProtectedRoute user={user}>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     type: "collapse",
@@ -52,7 +68,11 @@ const routes = [
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
-    component: <Tables />,
+    component: (
+      <ProtectedRoute user={null}>
+        <Tables />
+      </ProtectedRoute>
+    ),
   },
   {
     type: "collapse",
@@ -60,7 +80,11 @@ const routes = [
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
-    component: <Billing />,
+    component: (
+      <ProtectedRoute user={null}>
+        <Billing />
+      </ProtectedRoute>
+    ),
   },
 
   {
@@ -69,7 +93,11 @@ const routes = [
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
-    component: <Notifications />,
+    component: (
+      <ProtectedRoute user={null}>
+        <Notifications />
+      </ProtectedRoute>
+    ),
   },
   {
     type: "collapse",
@@ -77,7 +105,11 @@ const routes = [
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
-    component: <Profile />,
+    component: (
+      <ProtectedRoute user={null}>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
   {
     type: "collapse",

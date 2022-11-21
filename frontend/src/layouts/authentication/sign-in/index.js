@@ -3,7 +3,7 @@
 */
 
 import { useState } from "react";
-
+import axios from "axios";
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -32,8 +32,18 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [input, setInput] = useState({ email: "", password: "" });
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = await axios.post("http://localhost:4000/student/login", {
+      email: input.email,
+      password: input.password,
+    });
+    if (rememberMe) {
+      localStorage.setItem("user", user);
+    }
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -73,10 +83,22 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                value={input.email}
+                onChange={(e) => setInput({ ...input, email: e.target.value })}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                value={input.password}
+                onChange={(e) => setInput({ ...input, password: e.target.value })}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -90,7 +112,7 @@ function Basic() {
                 &nbsp;&nbsp;Remember me
               </MDTypography>
             </MDBox>
-            <MDBox mt={4} mb={1}>
+            <MDBox mt={4} mb={1} onClick={handleSubmit}>
               <MDButton variant="gradient" color="info" fullWidth>
                 sign in
               </MDButton>

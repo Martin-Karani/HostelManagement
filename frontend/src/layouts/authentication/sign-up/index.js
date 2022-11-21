@@ -20,8 +20,20 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import { useState } from "react";
+import axios from "axios";
 
 function Cover() {
+  const [input, setInput] = useState({ email: "", password: "", name: "" });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = await axios.post("http://localhost:4000/student/login", {
+      email: input.email,
+      password: input.password,
+    });
+    localStorage.setItem("user", user);
+  };
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -46,13 +58,34 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput
+                type="text"
+                label="Name"
+                variant="standard"
+                fullWidth
+                value={input.name}
+                onChange={(e) => setInput({ ...input, name: e.target.value })}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                variant="standard"
+                fullWidth
+                value={input.email}
+                onChange={(e) => setInput({ ...input, email: e.target.value })}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                variant="standard"
+                fullWidth
+                value={input.password}
+                onChange={(e) => setInput({ ...input, password: e.target.value })}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
@@ -76,7 +109,7 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 sign Up
               </MDButton>
             </MDBox>
