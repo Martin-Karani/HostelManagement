@@ -41,6 +41,8 @@ import { useMaterialUIController, setMiniSidenav } from "context";
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import Home from "home";
+import Cover from "layouts/authentication/reset-password/cover";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -178,6 +180,8 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
+        <Route path="/" element={<Home />} />
+        <Route path="/forgot-password" element={<Cover />} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </ThemeProvider>

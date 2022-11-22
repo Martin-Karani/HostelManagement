@@ -106,16 +106,7 @@ function Basic() {
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                <MDTypography
-                  component={Link}
-                  to="/forgot-password"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Forgot Password?
-                </MDTypography>
+                <Link to="/forgot-password">Forgot Password?</Link>
               </MDTypography>
             </MDBox>
           </MDBox>
