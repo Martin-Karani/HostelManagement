@@ -3,7 +3,7 @@ const student = require("../services/student.service");
 async function get(req, res, next) {
   try {
     console.log(req.query.page);
-    res.json(await student.getMultiple(req.query.page));
+    res.json(await student.getMultiple(1));
   } catch (err) {
     console.error(`Error while getting student`, err.message);
     next(err);

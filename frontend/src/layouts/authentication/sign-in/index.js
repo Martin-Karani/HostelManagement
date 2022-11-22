@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MuiLink from "@mui/material/Link";
 
@@ -31,18 +30,17 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
   const [input, setInput] = useState({ email: "", password: "" });
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = await axios.post("http://localhost:4000/student/login", {
       email: input.email,
       password: input.password,
     });
-    if (rememberMe) {
-      localStorage.setItem("user", user);
-    }
+    localStorage.setItem("user", user);
+    // if (rememberMe) {
+    // }
   };
 
   return (
@@ -100,18 +98,7 @@ function Basic() {
                 onChange={(e) => setInput({ ...input, password: e.target.value })}
               />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox>
+
             <MDBox mt={4} mb={1} onClick={handleSubmit}>
               <MDButton variant="gradient" color="info" fullWidth>
                 sign in
@@ -119,16 +106,15 @@ function Basic() {
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
                 <MDTypography
                   component={Link}
-                  to="/authentication/sign-up"
+                  to="/forgot-password"
                   variant="button"
                   color="info"
                   fontWeight="medium"
                   textGradient
                 >
-                  Sign up
+                  Forgot Password?
                 </MDTypography>
               </MDTypography>
             </MDBox>

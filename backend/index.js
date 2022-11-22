@@ -1,11 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const app = express();
 const port = process.env.PORT || 4000;
 const studentRouter = require("./src/routes/student.routes");
 // const adminRouter = require("./src/routes/admin.routes");
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: true,

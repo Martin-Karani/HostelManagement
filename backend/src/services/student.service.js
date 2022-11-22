@@ -7,7 +7,7 @@ async function getMultiple(page = 1) {
   const offset = helper.getOffset(page, config.listPerPage);
   console.log(offset);
   const rows = await db.query(
-    `SELECT student_id, full_name, phone_no, guardian_name, guardian_phone, created_in 
+    `SELECT  full_name, phone_no,  guardian_phone 
     FROM students `
   );
   console.log(rows);
@@ -50,7 +50,7 @@ async function login(para) {
 async function create(student) {
   const studentExists = await getStudent(student.email);
   let message;
-  console.log(studentExists);
+  console.log("studentExists");
   if (studentExists) return (message = "Student Already in the system");
 
   const salt = await bcrypt.genSalt(10);

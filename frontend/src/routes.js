@@ -40,14 +40,15 @@ import { Navigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function ProtectedRoute({ user, children }) {
-  if (!user) {
+  if (user) {
     return <Navigate to="/authentication/sign-in" replace />;
   }
 
   return children;
 }
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = null;
+// JSON.parse(localStorage.getItem("user"));
 
 const routes = [
   {

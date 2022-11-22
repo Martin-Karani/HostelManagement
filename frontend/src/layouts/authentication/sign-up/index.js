@@ -3,11 +3,11 @@
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
+// import Checkbox from "@mui/material/Checkbox";
 
 // Hostel Management React components
 import MDBox from "components/MDBox";
@@ -22,18 +22,35 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import { useState } from "react";
 import axios from "axios";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
 function Cover() {
-  const [input, setInput] = useState({ email: "", password: "", name: "" });
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    name: "",
+    gender: "",
+    phoneNo: "",
+    guardian_phone: "",
+    national_id: "",
+    profile_info: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await axios.post("http://localhost:4000/student/login", {
+    const user = await axios.post("http://localhost:4000/student/signup", {
       email: input.email,
-      password: input.password,
+      password: input.name,
+      name: input.name,
+      gender: input.gender,
+      phoneNo: input.phoneNo,
+      guardian_phone: input.guardian_phone,
+      national_id: input.national_id,
+      profile_info: input.profile_info,
     });
     localStorage.setItem("user", user);
   };
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -79,54 +96,69 @@ function Cover() {
             </MDBox>
             <MDBox mb={2}>
               <MDInput
-                type="password"
-                label="Password"
+                type="number"
+                label="Phone No"
                 variant="standard"
                 fullWidth
-                value={input.password}
-                onChange={(e) => setInput({ ...input, password: e.target.value })}
+                value={input.phoneNo}
+                onChange={(e) => setInput({ ...input, phoneNo: e.target.value })}
               />
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
+            <MDBox>
+              <FormControl fullWidth style={{ marginBottom: "2rem" }}>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={input.gender}
+                  style={{ padding: ".8rem 0" }}
+                  label="Gender"
+                  onChange={(e) => setInput({ ...input, gender: e.target.value })}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                </Select>
+              </FormControl>
             </MDBox>
+            <MDBox>
+              <FormControl fullWidth>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Profile Info"
+                  multiline
+                  fullWidth
+                  rows={4}
+                  value={input.profile_info}
+                  onChange={(e) => setInput({ ...input, profile_info: e.target.value })}
+                  // placeholder="profile info"
+                />
+              </FormControl>
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput
+                type="number"
+                label="ID Number"
+                variant="standard"
+                fullWidth
+                value={input.national_id}
+                onChange={(e) => setInput({ ...input, national_id: e.target.value })}
+              />
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput
+                type="number"
+                label="Guardian Number"
+                variant="standard"
+                fullWidth
+                value={input.guardian_phone}
+                onChange={(e) => setInput({ ...input, guardian_phone: e.target.value })}
+              />
+            </MDBox>
+
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 sign Up
               </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Already have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-in"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign in
-                </MDTypography>
-              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>
