@@ -5,7 +5,7 @@
 import { useState } from "react";
 import axios from "axios";
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -28,9 +28,13 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { Alert } from "@mui/material";
 
 function Basic() {
   const [input, setInput] = useState({ email: "", password: "" });
+  // const [data, setData] = useState({});
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,9 +42,13 @@ function Basic() {
       email: input.email,
       password: input.password,
     });
-    localStorage.setItem("user", user);
-    // if (rememberMe) {
-    // }
+    console.log(user);
+    if (user.data.error) {
+      setError(user.data.error);
+    } else {
+      localStorage.setItem("user", JSON.stringify(user.data));
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -78,6 +86,7 @@ function Basic() {
             </Grid>
           </Grid>
         </MDBox>
+        {error && <Alert severity="error">{error}</Alert>}
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>

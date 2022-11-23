@@ -3,26 +3,26 @@
 */
 
 // prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 // @mui material components
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
+// import Container from "@mui/material/Container";
+// import Link from "@mui/material/Link";
+// import Icon from "@mui/material/Icon";
 
 // Hostel Management React components
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+// import MDTypography from "components/MDTypography";
 
 // Hostel Management React base styles
-import typography from "assets/theme/base/typography";
+// import typography from "assets/theme/base/typography";
 
-function Footer({ light }) {
-  const { size } = typography;
+function Footer() {
+  // const { size } = typography;
 
   return (
     <MDBox position="absolute" width="100%" bottom={0} py={4}>
-      <Container>
+      {/* <Container>
         <MDBox
           width="100%"
           display="flex"
@@ -54,19 +54,19 @@ function Footer({ light }) {
             for a better web.
           </MDBox>
         </MDBox>
-      </Container>
+      </Container> */}
     </MDBox>
   );
 }
 
 // Setting default props for the Footer
-Footer.defaultProps = {
-  light: false,
-};
+// Footer.defaultProps = {
+//   light: false,
+// };
 
 // Typechecking props for the Footer
-Footer.propTypes = {
-  light: PropTypes.bool,
-};
+// Footer.propTypes = {
+//   light: PropTypes.bool,
+// };
 
 export default Footer;

@@ -176,6 +176,7 @@ export default function data() {
             // component={Link}
             // to={action.route}
             variant="outlined"
+            onClick={handleClickOpen}
             size="small"
             color="success"
           >
@@ -184,7 +185,7 @@ export default function data() {
         ),
       },
       {
-        author: <Author image={team2} name="Room #24" hostelName="N-Hostels" />,
+        author: <Author image={team2} name="Room #9" hostelName="N-Hostels" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="4 Students" color="success" variant="gradient" size="sm" />
@@ -200,6 +201,7 @@ export default function data() {
             // component={Link}
             // to={action.route}
             variant="outlined"
+            onClick={handleClickOpen}
             size="small"
             color="success"
           >
@@ -208,7 +210,7 @@ export default function data() {
         ),
       },
       {
-        author: <Author image={team2} name="Room #24" hostelName="Q-Hostels" />,
+        author: <Author image={team2} name="Room #7" hostelName="Q-Hostels" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="4 Students" color="success" variant="gradient" size="sm" />
@@ -224,6 +226,7 @@ export default function data() {
             // component={Link}
             // to={action.route}
             variant="outlined"
+            onClick={handleClickOpen}
             size="small"
             color="success"
           >
@@ -232,7 +235,7 @@ export default function data() {
         ),
       },
       {
-        author: <Author image={team2} name="Room #24" hostelName="N-Hostels" />,
+        author: <Author image={team2} name="Room #94" hostelName="N-Hostels" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="4 Students" color="success" variant="gradient" size="sm" />
@@ -248,6 +251,7 @@ export default function data() {
             // component={Link}
             // to={action.route}
             variant="outlined"
+            onClick={handleClickOpen}
             size="small"
             color="success"
           >
@@ -256,7 +260,7 @@ export default function data() {
         ),
       },
       {
-        author: <Author image={team2} name="Room #24" hostelName="P-Hostels" />,
+        author: <Author image={team2} name="Room #27" hostelName="P-Hostels" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="4 Students" color="success" variant="gradient" size="sm" />
@@ -274,7 +278,7 @@ export default function data() {
         ),
       },
       {
-        author: <Author image={team2} name="Room #24" hostelName="Q-Hostels" />,
+        author: <Author image={team2} name="Room #26" hostelName="Q-Hostels" />,
         status: (
           <MDBox ml={-1}>
             <MDBadge badgeContent="4 Students" color="success" variant="gradient" size="sm" />
@@ -290,6 +294,7 @@ export default function data() {
             // component={Link}
             // to={action.route}
             variant="outlined"
+            onClick={handleClickOpen}
             size="small"
             color="success"
           >

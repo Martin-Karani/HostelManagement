@@ -22,6 +22,7 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 // Data
 
 function Overview() {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -36,12 +37,12 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
                 title="profile information"
-                description="Hi, I’m Alex LOki, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+                description={user.profile_info}
                 info={{
-                  fullName: "Alex M. Koki",
-                  mobile: "(254) 791 665 318",
-                  email: "k24-2838-2018@mksu.com",
-                  location: "Machakos",
+                  fullName: `${user.full_name}`,
+                  mobile: `${user.phone_no}`,
+                  email: `${user.email}`,
+                  university: "Machakos",
                 }}
                 action={{ route: "", tooltip: "Edit Profile" }}
                 shadow={false}

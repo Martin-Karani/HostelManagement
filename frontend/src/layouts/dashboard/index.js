@@ -18,60 +18,64 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
+import MDInput from "components/MDInput";
+import MDButton from "components/MDButton";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
-
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Available Rooms"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Total Rooms"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          {/* <Grid item xs={12} md={6} lg={3}>
+        {user.is_admin === 1 && (
+          <>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="dark"
+                    icon="weekend"
+                    title="Available Rooms"
+                    count={7}
+                    percentage={{
+                      color: "success",
+                      // amount: "+55%",
+                      // label: "than lask week",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    icon="leaderboard"
+                    title="Total Rooms"
+                    count="2,300"
+                    percentage={{
+                      color: "success",
+                      // amount: "+3%",
+                      // label: "than last month",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={6} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="success"
+                    icon="store"
+                    title="Revenue"
+                    count="34k"
+                    percentage={{
+                      color: "success",
+                      // amount: "+1%",
+                      // label: "than yesterday",
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              {/* <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
@@ -86,7 +90,49 @@ function Dashboard() {
               />
             </MDBox>
           </Grid> */}
-        </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+              <Grid
+                item
+                xs={12}
+                md={6}
+                lg={8}
+                style={{
+                  background: "white",
+                  margin: "1.4rem",
+                  padding: "1rem",
+                  borderRadius: "1rem",
+                }}
+              >
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="Notice Title"
+                    fullWidth
+
+                    // value='{input.email}'
+                    // onChange={(e) => setInput({ ...input, email: e.target.value })}
+                  />
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="Notice Details"
+                    fullWidth
+
+                    // value='{input.email}'
+                    // onChange={(e) => setInput({ ...input, email: e.target.value })}
+                  />
+                </MDBox>
+                <MDBox mt={4} mb={1}>
+                  <MDButton variant="gradient" color="info" fullWidth>
+                    Create a Notice
+                  </MDButton>
+                </MDBox>
+              </Grid>
+            </Grid>
+          </>
+        )}
 
         <MDBox>
           <Grid container spacing={3}>

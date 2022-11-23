@@ -20,9 +20,10 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Alert, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Cover() {
   const [input, setInput] = useState({
@@ -35,22 +36,37 @@ function Cover() {
     national_id: "",
     profile_info: "",
   });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    if (user && !user.is_admin) {
+      navigate("/dashboard");
+    }
+  }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await axios.post("http://localhost:4000/student/signup", {
+    setError(null);
+    const response = await axios.post("http://localhost:4000/student/signup", {
       email: input.email,
       password: input.name,
       name: input.name,
       gender: input.gender,
-      phoneNo: input.phoneNo,
+      phone_no: input.phoneNo,
       guardian_phone: input.guardian_phone,
       national_id: input.national_id,
       profile_info: input.profile_info,
     });
-    localStorage.setItem("user", user);
+    if (response.data.error) {
+      setError(response.data.error);
+    } else {
+      // localStorage.setItem("user", JSON.stringify(user.data));
+      // navigate("/dashboard");
+      navigate("/logout");
+    }
+    // <Navigate to="/dashboard" replace />;
   };
-
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -72,6 +88,7 @@ function Cover() {
             Enter your email and password to register
           </MDTypography>
         </MDBox>
+        {error && <Alert severity="error">{error}</Alert>}
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>

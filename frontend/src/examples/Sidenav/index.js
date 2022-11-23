@@ -35,6 +35,7 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+// import LogOut from "layouts/LogOut";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -167,7 +168,10 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           (darkMode && !transparentSidenav && whiteSidenav)
         }
       />
-      <List>{renderRoutes}</List>
+      <List>
+        {renderRoutes}
+        {/* <LogOut /> */}
+      </List>
     </SidenavRoot>
   );
 }

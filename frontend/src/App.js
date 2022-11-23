@@ -24,8 +24,8 @@ import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
 
 // Hostel Management React Dark Mode themes
-import themeDark from "assets/theme-dark";
-import themeDarkRTL from "assets/theme-dark/theme-rtl";
+// import themeDark from "assets/theme-dark";
+// import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
 // RTL plugins
 import rtlPlugin from "stylis-plugin-rtl";
@@ -40,9 +40,10 @@ import { useMaterialUIController, setMiniSidenav } from "context";
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
-import Home from "home";
+// import brandDark from "assets/images/logo-ct-dark.png";
+// import Home from "home";
 import Cover from "layouts/authentication/reset-password/cover";
+import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -138,13 +139,13 @@ export default function App() {
 
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+      <ThemeProvider theme={darkMode ? themeRTL : themeRTL}>
         <CssBaseline />
         {layout === "dashboard" && (
           <>
             <Sidenav
               color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandWhite : brandWhite}
               brandName="Hostel Management"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
@@ -156,18 +157,20 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
+          <Route path="/forgot-password" element={<Cover />} />
+          <Route path="/authentication/sign-in" element={<SignIn />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
   ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
+    <ThemeProvider theme={darkMode ? theme : theme}>
       <CssBaseline />
       {layout === "dashboard" && (
         <>
           <Sidenav
             color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandWhite : brandWhite}
             brandName="Hostel Management"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
@@ -180,8 +183,11 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
+
         <Route path="/forgot-password" element={<Cover />} />
+        <Route path="/authentication/sign-in" element={<SignIn />} />
+
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </ThemeProvider>

@@ -21,7 +21,7 @@ async function signUp(req, res, next) {
 
 async function signin(req, res, next) {
   try {
-    await student.login(req.body);
+    res.json(await student.login(req.body));
   } catch (err) {
     console.error(`Error while logging student`, err.message);
     next(err);

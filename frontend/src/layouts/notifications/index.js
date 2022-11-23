@@ -11,7 +11,7 @@ import Card from "@mui/material/Card";
 // Hostel Management React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAlert from "components/MDAlert";
+// import MDAlert from "components/MDAlert";
 import MDButton from "components/MDButton";
 import MDSnackbar from "components/MDSnackbar";
 
@@ -35,21 +35,21 @@ function Notifications() {
   const openErrorSB = () => setErrorSB(true);
   const closeErrorSB = () => setErrorSB(false);
 
-  const alertContent = (name) => (
-    <MDTypography variant="body2" color="white">
-      A simple {name} alert with{" "}
-      <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
-        an example link
-      </MDTypography>
-      . Give it a click if you like.
-    </MDTypography>
-  );
+  // const alertContent = (name) => (
+  //   <MDTypography variant="body2" color="white">
+  //     A simple {name} alert with{" "}
+  //     <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
+  //       an example link
+  //     </MDTypography>
+  //     . Give it a click if you like.
+  //   </MDTypography>
+  // );
 
   const renderSuccessSB = (
     <MDSnackbar
       color="success"
       icon="check"
-      title="Material Dashboard"
+      title="Hostel Dashboard"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={successSB}
@@ -62,7 +62,7 @@ function Notifications() {
   const renderInfoSB = (
     <MDSnackbar
       icon="notifications"
-      title="Material Dashboard"
+      title="Hostel Dashboard"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={infoSB}
@@ -75,7 +75,7 @@ function Notifications() {
     <MDSnackbar
       color="warning"
       icon="star"
-      title="Material Dashboard"
+      title="Hostel Dashboard"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={warningSB}
@@ -89,7 +89,7 @@ function Notifications() {
     <MDSnackbar
       color="error"
       icon="warning"
-      title="Material Dashboard"
+      title="Hostel Dashboard"
       content="Hello, world! This is a notification message"
       dateTime="11 mins ago"
       open={errorSB}
@@ -109,7 +109,7 @@ function Notifications() {
               <MDBox p={2}>
                 <MDTypography variant="h5">Alerts</MDTypography>
               </MDBox>
-              <MDBox pt={2} px={2}>
+              {/* <MDBox pt={2} px={2}>
                 <MDAlert color="primary" dismissible>
                   {alertContent("primary")}
                 </MDAlert>
@@ -134,7 +134,7 @@ function Notifications() {
                 <MDAlert color="dark" dismissible>
                   {alertContent("dark")}
                 </MDAlert>
-              </MDBox>
+              </MDBox> */}
             </Card>
           </Grid>
 

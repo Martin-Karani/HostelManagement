@@ -20,41 +20,45 @@ import PaymentMethod from "layouts/billing/components/PaymentMethod";
 import Invoices from "layouts/billing/components/Invoices";
 
 function Billing() {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <DashboardLayout>
       <DashboardNavbar absolute isMini />
       <MDBox mt={8}>
         <MDBox mb={3}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} xl={6}>
-                  <MasterCard number={4562112245947852} holder="Caiso Mwende" expires="11/22" />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="account_balance"
-                    title="mpesa"
-                    description="Total Paid"
-                    value="Ksh 20,000"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} xl={3}>
-                  <DefaultInfoCard
-                    icon="paypal"
-                    title="paypal"
-                    description="Total Paid"
-                    value="Ksh 455"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <PaymentMethod />
+            {user.is_admin !== 1 ? (
+              <Grid item xs={12} lg={8}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} xl={6}>
+                    <MasterCard number={4562112245947852} holder="Caiso Mwende" expires="11/22" />
+                  </Grid>
+                  <Grid item xs={12} md={6} xl={3}>
+                    <DefaultInfoCard
+                      icon="account_balance"
+                      title="mpesa"
+                      description="Total Paid"
+                      value="Ksh 20,000"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6} xl={3}>
+                    <DefaultInfoCard
+                      icon="paypal"
+                      title="paypal"
+                      description="Total Paid"
+                      value="Ksh 455"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <PaymentMethod />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Invoices />
-            </Grid>
+            ) : (
+              <Grid item xs={12} lg={4}>
+                <Invoices />
+              </Grid>
+            )}
           </Grid>
         </MDBox>
       </MDBox>

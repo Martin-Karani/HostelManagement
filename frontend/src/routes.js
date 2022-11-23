@@ -31,111 +31,175 @@ import Billing from "layouts/billing";
 // import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 import { Navigate } from "react-router-dom";
+import LogOut from "layouts/LogOut";
 
 // eslint-disable-next-line react/prop-types
 function ProtectedRoute({ user, children }) {
-  if (user) {
+  if (!user) {
     return <Navigate to="/authentication/sign-in" replace />;
   }
 
   return children;
 }
 
-const user = null;
-// JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 
-const routes = [
-  {
-    type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: (
-      <ProtectedRoute user={user}>
-        <Dashboard />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Rooms",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: (
-      <ProtectedRoute user={null}>
-        <Tables />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: (
-      <ProtectedRoute user={null}>
-        <Billing />
-      </ProtectedRoute>
-    ),
-  },
+const routes =
+  user === null || user.is_admin !== 1
+    ? [
+        {
+          type: "collapse",
+          name: "Dashboard",
+          key: "dashboard",
+          icon: <Icon fontSize="small">dashboard</Icon>,
+          route: "/dashboard",
+          component: (
+            <ProtectedRoute user={user}>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Rooms",
+          key: "tables",
+          icon: <Icon fontSize="small">table_view</Icon>,
+          route: "/tables",
+          component: (
+            <ProtectedRoute user={user}>
+              <Tables />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Billing",
+          key: "billing",
+          icon: <Icon fontSize="small">receipt_long</Icon>,
+          route: "/billing",
+          component: (
+            <ProtectedRoute user={user}>
+              <Billing />
+            </ProtectedRoute>
+          ),
+        },
 
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: (
-      <ProtectedRoute user={null}>
-        <Notifications />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: (
-      <ProtectedRoute user={null}>
-        <Profile />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-  },
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-  {
-    type: "collapse",
-    name: "Forget Password",
-    key: "forget-password",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-];
+        {
+          type: "collapse",
+          name: "Notifications",
+          key: "notifications",
+          icon: <Icon fontSize="small">notifications</Icon>,
+          route: "/notifications",
+          component: (
+            <ProtectedRoute user={user}>
+              <Notifications />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Profile",
+          key: "profile",
+          icon: <Icon fontSize="small">person</Icon>,
+          route: "/profile",
+          component: (
+            <ProtectedRoute user={user}>
+              <Profile />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Sign Up",
+          key: "sign-up",
+          icon: <Icon fontSize="small">assignment</Icon>,
+          route: "/authentication/sign-up",
+          component: <SignUp />,
+        },
+        {
+          type: "collapse",
+          name: "Log Out",
+          key: "log-out",
+          icon: <Icon fontSize="small">assignment</Icon>,
+          route: "/logout",
+          component: <LogOut />,
+        },
+      ]
+    : [
+        {
+          type: "collapse",
+          name: "Dashboard",
+          key: "dashboard",
+          icon: <Icon fontSize="small">dashboard</Icon>,
+          route: "/dashboard",
+          component: (
+            <ProtectedRoute user={user}>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Rooms",
+          key: "tables",
+          icon: <Icon fontSize="small">table_view</Icon>,
+          route: "/tables",
+          component: (
+            <ProtectedRoute user={user}>
+              <Tables />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Billing",
+          key: "billing",
+          icon: <Icon fontSize="small">receipt_long</Icon>,
+          route: "/billing",
+          component: (
+            <ProtectedRoute user={user}>
+              <Billing />
+            </ProtectedRoute>
+          ),
+        },
+
+        {
+          type: "collapse",
+          name: "Notifications",
+          key: "notifications",
+          icon: <Icon fontSize="small">notifications</Icon>,
+          route: "/notifications",
+          component: (
+            <ProtectedRoute user={user}>
+              <Notifications />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Profile",
+          key: "profile",
+          icon: <Icon fontSize="small">person</Icon>,
+          route: "/profile",
+          component: (
+            <ProtectedRoute user={user}>
+              <Profile />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          type: "collapse",
+          name: "Log Out",
+          key: "log-out",
+          icon: <Icon fontSize="small">assignment</Icon>,
+          route: "/logout",
+          component: <LogOut />,
+        },
+      ];
 
 export default routes;
