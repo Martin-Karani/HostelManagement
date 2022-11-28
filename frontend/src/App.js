@@ -44,6 +44,9 @@ import brandWhite from "assets/images/logo-ct.png";
 // import Home from "home";
 import Cover from "layouts/authentication/reset-password/cover";
 import SignIn from "layouts/authentication/sign-in";
+import MDBox from "components/MDBox";
+import { Icon } from "@mui/material";
+import FormComplains from "FormComplains";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -53,6 +56,7 @@ export default function App() {
     layout,
     sidenavColor,
     transparentSidenav,
+
     whiteSidenav,
     darkMode,
   } = controller;
@@ -113,29 +117,7 @@ export default function App() {
       return null;
     });
 
-  // const configsButton = (
-  //   <MDBox
-  //     display="flex"
-  //     justifyContent="center"
-  //     alignItems="center"
-  //     width="3.25rem"
-  //     height="3.25rem"
-  //     bgColor="white"
-  //     shadow="sm"
-  //     borderRadius="50%"
-  //     position="fixed"
-  //     right="2rem"
-  //     bottom="2rem"
-  //     zIndex={99}
-  //     color="dark"
-  //     sx={{ cursor: "pointer" }}
-  //     onClick={handleConfiguratorOpen}
-  //   >
-  //     <Icon fontSize="small" color="inherit">
-  //       settings
-  //     </Icon>
-  //   </MDBox>
-  // );
+  const configsButton = <FormComplains />;
 
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
@@ -151,6 +133,7 @@ export default function App() {
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
+
             <Configurator />
           </>
         )}
@@ -177,7 +160,7 @@ export default function App() {
             onMouseLeave={handleOnMouseLeave}
           />
           <Configurator />
-          {/* {configsButton} */}
+          {configsButton}
         </>
       )}
       {layout === "vr" && <Configurator />}

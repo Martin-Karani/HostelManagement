@@ -1,18 +1,17 @@
 const admin = require("../services/admin.service");
 
-async function getMe(req, res, next) {
+async function getRooms(req, res, next) {
   try {
-    console.log(req.query.page);
-    res.json(await student.getMe(req.query.page));
+    res.json(await admin.getRooms());
   } catch (err) {
     console.error(`Error while getting student`, err.message);
     next(err);
   }
 }
 
-async function adminRegister(req, res, next) {
+async function createNotice(req, res, next) {
   try {
-    res.json(await student.create(req.body));
+    res.json(await admin.createNotice(req.body));
   } catch (err) {
     console.error(`Error while creating student`, err.message);
     next(err);
@@ -38,8 +37,8 @@ async function remove(req, res, next) {
 }
 
 module.exports = {
-  get,
-  create,
   update,
   remove,
+  createNotice,
+  getRooms,
 };

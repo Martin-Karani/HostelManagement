@@ -1,52 +1,45 @@
-// const db = require("./db.service");
-// const helper = require("../utils/helper.util");
-// const config = require("../configs/general.config");
+const db = require("./db.service");
+const helper = require("../utils/helper.util");
+const config = require("../configs/general.config");
 
-// async function getMe(page = 1) {
-//   const offset = helper.getOffset(page, config.listPerPage);
-//   console.log(offset);
-//   const rows = await db.query(
-//     `SELECT student_id, full_name, phone_no, guardian_name, guardian_phone, created_in
-//     FROM students `
-//   );
-//   console.log(rows);
-//   const data = helper.emptyOrRows(rows);
-//   const meta = { page };
+async function getRooms() {
+  const result = await db.query(
+    `SELECT room_id, hostel_name, room_no, booked, booked_by
+    FROM rooms `
+  );
+  return result;
+}
 
-//   return {
-//     data,
-//     meta,
-//   };
-// }
+async function getComplains() {
+  const result = await db.query(
+    `SELECT complains_id, complains, created_at, from
+      FROM complains `
+  );
+  return result;
+}
 
-// async function create(student) {
-//   console.log(student);
-//   const result = await db.query(
-//     `INSERT INTO students
-//     (full_name, email, gender, phone_no, password,guardian_name,national_id,guardian_phone,created_in)
-//     VALUES
-//     (?, ?, ?, ?, ?, ?,?,?,?)`,
-//     [
-//       student.full_name,
-//       student.email,
-//       student.gender,
-//       student.phone_no,
-//       student.password,
-//       student.guardian_name,
-//       student.national_id,
-//       student.guardian_phone,
-//       new Date().toISOString().slice(0, 19).replace("T", " "),
-//     ]
-//   );
+async function createNotice({ noticeTitle, notice_details }) {
+  console.log(student);
+  const result = await db.query(
+    `INSERT INTO notice
+    (notice_title, notice_details, created_at)
+    VALUES
+    (?, ?, ?)`,
+    [
+      noticeTitle,
+      notice_details,
+      new Date().toISOString().slice(0, 19).replace("T", " "),
+    ]
+  );
 
-//   let message = "Error in creating student";
+  let message = "Error in creating notice";
 
-//   if (result.affectedRows) {
-//     message = "Student created successfully";
-//   }
+  if (result.affectedRows) {
+    message = "notice created successfully";
+  }
 
-//   return { message };
-// }
+  return { message };
+}
 
 // async function update(id, student) {
 //   const result = await db.query(
@@ -89,9 +82,10 @@
 //   return { message };
 // }
 
-// module.exports = {
-//   getMultiple,
-//   create,
-//   update,
-//   remove,
-// };
+module.exports = {
+  getRooms,
+  getComplains,
+  createNotice,
+  //   update,
+  //   remove,
+};

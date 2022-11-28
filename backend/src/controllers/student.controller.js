@@ -1,4 +1,5 @@
 const student = require("../services/student.service");
+const admin = require("../services/admin.service");
 
 async function get(req, res, next) {
   try {
@@ -9,7 +10,23 @@ async function get(req, res, next) {
     next(err);
   }
 }
-
+async function getRooms(req, res, next) {
+  try {
+    res.json(await admin.getRooms());
+  } catch (err) {
+    console.error(`Error while getting student`, err.message);
+    next(err);
+  }
+}
+async function getNotices(req, res, next) {}
+async function createComplain(req, res, next) {
+  try {
+    res.json(student.createComplain(req.body));
+  } catch (error) {
+    console.error(`Error while creating student`, err.message);
+    next(err);
+  }
+}
 async function signUp(req, res, next) {
   try {
     res.json(await student.create(req.body));
@@ -18,7 +35,11 @@ async function signUp(req, res, next) {
     next(err);
   }
 }
-
+async function bookBed(req, res, next) {
+  try {
+    res.json(await student.bookBed(req.body));
+  } catch (error) {}
+}
 async function signin(req, res, next) {
   try {
     res.json(await student.login(req.body));
@@ -48,8 +69,12 @@ async function remove(req, res, next) {
 
 module.exports = {
   get,
+  getRooms,
+  bookBed,
   signUp,
   update,
   remove,
+  createComplain,
+  getNotices,
   signin,
 };

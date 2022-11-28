@@ -38,8 +38,10 @@ import Icon from "@mui/material/Icon";
 import { Navigate } from "react-router-dom";
 import LogOut from "layouts/LogOut";
 
+let user;
 // eslint-disable-next-line react/prop-types
 function ProtectedRoute({ user, children }) {
+  user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
     return <Navigate to="/authentication/sign-in" replace />;
   }
@@ -47,10 +49,10 @@ function ProtectedRoute({ user, children }) {
   return children;
 }
 
-const user = JSON.parse(localStorage.getItem("user"));
+user = JSON.parse(localStorage.getItem("user"));
 
 const routes =
-  user === null || user.is_admin !== 1
+  user !== null && user.is_admin === 1
     ? [
         {
           type: "collapse",

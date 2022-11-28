@@ -18,11 +18,11 @@ function Invoices() {
     <Card sx={{ height: "100%" }}>
       <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
         <MDTypography variant="h6" fontWeight="medium">
-          Invoices
+          Paid Invoices
         </MDTypography>
-        <MDButton variant="outlined" color="info" size="small">
+        {/* <MDButton variant="outlined" color="info" size="small">
           view all
-        </MDButton>
+        </MDButton> */}
       </MDBox>
       <MDBox p={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>

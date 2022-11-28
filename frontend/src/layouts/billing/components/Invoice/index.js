@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-function Invoice({ date, id, price, noGutter }) {
+function Invoice({ date, id, price, noGutter, name }) {
   return (
     <MDBox
       component="li"
@@ -21,6 +21,9 @@ function Invoice({ date, id, price, noGutter }) {
       mb={noGutter ? 0 : 1}
     >
       <MDBox lineHeight={1.125}>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          {"name"}
+        </MDTypography>
         <MDTypography display="block" variant="button" fontWeight="medium">
           {date}
         </MDTypography>

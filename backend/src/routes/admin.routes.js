@@ -1,10 +1,10 @@
-// const express = require('express');
-// const checkAuth = require('../Middleware/checkAuth.middleware');
-// const adminControllers = require('../Controllers/admin.controllers');
-// const router = express.Router();
+const express = require("express");
 
-// router.post('/signup', adminControllers.adminRegister);
+const adminControllers = require("../controllers/admin.controller");
+const router = express.Router();
+
+router.post("/createNotice", adminControllers.createNotice);
 // router.post('/login', adminControllers.adminLogin);
-// router.get('/me', checkAuth, adminControllers.getMe);
+router.get("/rooms", adminControllers.getRooms);
 
-// module.exports = router
+module.exports = router;

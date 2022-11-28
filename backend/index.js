@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 4000;
 const studentRouter = require("./src/routes/student.routes");
-// const adminRouter = require("./src/routes/admin.routes");
+const adminRouter = require("./src/routes/admin.routes");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/student", studentRouter);
-// app.use("/admin", adminRouter);
+app.use("/admin", adminRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

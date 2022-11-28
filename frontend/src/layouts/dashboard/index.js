@@ -66,7 +66,7 @@ function Dashboard() {
                     color="success"
                     icon="store"
                     title="Revenue"
-                    count="34k"
+                    count="_"
                     percentage={{
                       color: "success",
                       // amount: "+1%",
@@ -76,20 +76,20 @@ function Dashboard() {
                 </MDBox>
               </Grid>
               {/* <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Rooms Students Capacity"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid> */}
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="primary"
+                    icon="person_add"
+                    title="Rooms Students Capacity"
+                    count="+91"
+                    percentage={{
+                      color: "success",
+                      amount: "",
+                      label: "Just updated",
+                    }}
+                  />
+                </MDBox>
+              </Grid> */}
             </Grid>
             <Grid container spacing={3}>
               <Grid

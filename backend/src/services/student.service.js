@@ -47,6 +47,48 @@ async function login({ email, password }) {
     return { error: "User does not exist" };
   }
 }
+async function bookBed({ email, room_id }) {
+  const student = await getStudent(email);
+  if (!student) return { error: "Student not in the system" };
+  console.log(student);
+  if (student.bookedRoom !== null)
+    return { error: "Student Already Has Booked the room" };
+  const resultStudent = await db.query(
+    `UPDATE students 
+      SET bookedRoom=?, 
+      WHERE email=?`,
+    [room_id, email]
+  );
+  const result = await db.query(
+    ` UPDATE rooms 
+    SET booked=?,booked_by=?
+    WHERE room_id=?`,
+    [true, student.student_id, room_id]
+  );
+  let message = "Error in booking";
+
+  if (result.affectedRows && resultStudent.affectedRows) {
+    message = "Room booked successfully";
+  }
+
+  return message;
+}
+async function createComplain({ student, complain }) {
+  const result = await db.query(
+    `INSERT INTO complains (complain, from, created_at)
+    VALUES (?,?,?)`,
+    [
+      complain,
+      student.student_id,
+      new Date().toISOString().slice(0, 19).replace("T", " "),
+    ]
+  );
+  let message = "Error in creating Complain";
+
+  if (result.affectedRows) {
+    message = "create complain successfully";
+  }
+}
 async function create(student) {
   const studentExists = await getStudent(student.email);
   let message;
@@ -130,5 +172,7 @@ module.exports = {
   create,
   update,
   remove,
+  bookBed,
+  createComplain,
   login,
 };

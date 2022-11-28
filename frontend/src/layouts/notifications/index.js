@@ -98,6 +98,7 @@ function Notifications() {
       bgWhite
     />
   );
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <DashboardLayout>
@@ -106,9 +107,12 @@ function Notifications() {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={8}>
             <Card>
-              <MDBox p={2}>
-                <MDTypography variant="h5">Alerts</MDTypography>
-              </MDBox>
+              {user.is_admin == 1 && (
+                <MDBox p={2}>
+                  <MDTypography variant="h5">Complains</MDTypography>
+                </MDBox>
+              )}
+
               {/* <MDBox pt={2} px={2}>
                 <MDAlert color="primary" dismissible>
                   {alertContent("primary")}
@@ -143,7 +147,7 @@ function Notifications() {
               <MDBox p={2} lineHeight={0}>
                 <MDTypography variant="h5">Notifications</MDTypography>
                 <MDTypography variant="button" color="text" fontWeight="regular">
-                  Notifications on this page use Toasts from Bootstrap. Read more details here.
+                  Notifications on this page use Toasts to show the importance.
                 </MDTypography>
               </MDBox>
               <MDBox p={2}>
