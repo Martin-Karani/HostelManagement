@@ -14,14 +14,26 @@ import team2 from "assets/images/hostel1.jpeg";
 import MDButton from "components/MDButton";
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MDAlert from "components/MDAlert";
 import Sidebar from "./sidebar";
+import axios from "axios";
 
 export default function data() {
   const [open, setOpen] = useState(false);
+  const [rooms, setRooms] = useState([]);
+
   const [selected, setSelected] = useState("");
+  const [selectedRoom, setSelectedRoom] = useState("");
+  const [openBed, setOpenBed] = useState(false);
   const [showAlert, setShowAlert] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/student/rooms").then((response) => {
+      setRooms(response.data);
+    });
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,14 +43,24 @@ export default function data() {
     setOpen(false);
   };
 
-  const handleBooked = () => {
+  const handleBooked = async (e) => {
+    e.preventDefault();
+    const results = await axios.post("http://localhost:4000/student/book", {
+      email: user.email,
+      room_no: 1,
+    });
+
+    user.booked_room = "booked";
+    localStorage.setItem("user", JSON.stringify(user));
+
     setShowAlert(true);
     setOpen(false);
   };
+  // const user = JSON.parse(localStorage.getItem("user"));
 
   const alertContent = (name) => (
     <MDTypography variant="body2" color="white">
-      You have Successfully Booked room {name}
+      You have Successfully Booked
     </MDTypography>
   );
   const Author = ({ image, name, hostelName }) => (
@@ -70,82 +92,86 @@ export default function data() {
         }}
       >
         <div style={{ display: "flex", padding: "2rem" }}>
-          <Sidebar />
-          <div>
-            <DialogTitle>Select Your Bed</DialogTitle>
-            <p style={{ padding: "0 0 0 15px" }}>Each bed is 7000 per semester</p>
-            <DialogContent>
-              <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
-                {[...Array(3)].map((_, idx) => (
-                  <Box
-                    component="div"
-                    onClick={() => setSelected(idx + 1)}
-                    sx={{
-                      width: 100,
-                      borderRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: 60,
-                      marginBottom: "10px",
-                      border: "1px solid gray",
-                      background: selected === idx + 1 ? "#d1d5db" : "none",
-                      cursor: "pointer",
-                      "&:hover": {
-                        backgroundColor: "#d1d5db",
-                        opacity: [0.9, 0.8, 0.7],
-                        color: "white",
-                      },
-                    }}
-                  >
-                    <p>Bed {idx + 1}</p>
-                  </Box>
-                ))}
-              </div>
-              <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
-                {[...Array(3)].map((_, idx) => (
-                  <Box
-                    component="div"
-                    onClick={() => setSelected(idx + 4)}
-                    sx={{
-                      width: 100,
-                      borderRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: 60,
-                      border: "1px solid gray",
-                      background: selected === idx + 4 ? "#d1d5db" : "none",
-                      cursor: "pointer",
-                      "&:hover": {
-                        backgroundColor: "#d1d5db",
-                        opacity: [0.9, 0.8, 0.7],
-                        color: "white",
-                      },
-                    }}
-                  >
-                    <p>Bed {idx + 4}</p>
-                  </Box>
-                ))}
-              </div>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="success">
-                Cancel
-              </Button>
-              {/* <Button onClick={handleClose}>Book</Button> */}
-              <MDButton
-                // component={Link}
-                // to={action.route}
-                variant="outlined"
-                onClick={handleBooked}
-                size="small"
-                color="success"
-              >
-                BOOK
-              </MDButton>
-            </DialogActions>
+          <div onClick={() => setOpenBed(!openBed)}>
+            <Sidebar room={rooms} setSelectedRoom={setSelectedRoom} />
           </div>
+          {openBed && (
+            <div>
+              <DialogTitle>Select Your Bed</DialogTitle>
+              <p style={{ padding: "0 0 0 15px" }}>Each bed is 7000 per semester</p>
+              <DialogContent>
+                <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+                  {[...Array(3)].map((_, idx) => (
+                    <Box
+                      component="div"
+                      onClick={() => setSelected(idx + 1)}
+                      sx={{
+                        width: 100,
+                        borderRadius: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: 60,
+                        marginBottom: "10px",
+                        border: "1px solid gray",
+                        background: selected === idx + 1 ? "#d1d5db" : "none",
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: "#d1d5db",
+                          opacity: [0.9, 0.8, 0.7],
+                          color: "white",
+                        },
+                      }}
+                    >
+                      <p>Bed {idx + 1}</p>
+                    </Box>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+                  {[...Array(3)].map((_, idx) => (
+                    <Box
+                      component="div"
+                      onClick={() => setSelected(idx + 4)}
+                      sx={{
+                        width: 100,
+                        borderRadius: "10px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: 60,
+                        border: "1px solid gray",
+                        background: selected === idx + 4 ? "#d1d5db" : "none",
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: "#d1d5db",
+                          opacity: [0.9, 0.8, 0.7],
+                          color: "white",
+                        },
+                      }}
+                    >
+                      <p>Bed {idx + 4}</p>
+                    </Box>
+                  ))}
+                </div>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="success">
+                  Cancel
+                </Button>
+                {/* <Button onClick={handleClose}>Book</Button> */}
+                <MDButton
+                  // component={Link}
+                  // to={action.route}
+                  variant="outlined"
+                  onClick={handleBooked}
+                  size="small"
+                  color="success"
+                >
+                  BOOK
+                </MDButton>
+              </DialogActions>
+            </div>
+          )}
         </div>
       </Dialog>
     </MDBox>
@@ -159,8 +185,8 @@ export default function data() {
   // ];
   return {
     columns: [
-      { Header: "Hostel Name", accessor: "author", width: "45%", align: "left" },
-      { Header: "Hotel Capacity", accessor: "status", align: "center" },
+      { Header: "Hostel Name", accessor: "author", width: "35%", align: "left" },
+      { Header: "Hostel Capacity", accessor: "status", align: "center" },
       { Header: "Last Updated", accessor: "employed", align: "center" },
       { Header: "action", accessor: "action", align: "center" },
     ],
@@ -178,18 +204,23 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDButton
-            // component={Link}
-            // to={action.route}
-            variant="outlined"
-            onClick={handleClickOpen}
-            size="small"
-            color="success"
-          >
-            BOOK
-          </MDButton>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
       {
         author: <Author image={team2} name="Hostel B" hostelName='"Q-Hostels"' />,
@@ -203,18 +234,23 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDButton
-            // component={Link}
-            // to={action.route}
-            variant="outlined"
-            onClick={handleClickOpen}
-            size="small"
-            color="success"
-          >
-            BOOK
-          </MDButton>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
       {
         author: <Author image={team2} name="Hostel C" hostelName='"N-Hostels"' />,
@@ -228,24 +264,29 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDButton
-            // component={Link}
-            // to={action.route}
-            variant="outlined"
-            onClick={handleClickOpen}
-            size="small"
-            color="success"
-          >
-            BOOK
-          </MDButton>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
       {
         author: <Author image={team2} name="Hostel D" hostelName='"Q-Hostels"' />,
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent="12 " color="success" variant="gradient" size="sm" />
+            <MDBadge badgeContent="12 Rooms" color="success" variant="gradient" size="sm" />
           </MDBox>
         ),
         employed: (
@@ -253,18 +294,23 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDButton
-            // component={Link}
-            // to={action.route}
-            variant="outlined"
-            onClick={handleClickOpen}
-            size="small"
-            color="success"
-          >
-            BOOK
-          </MDButton>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
       {
         author: <Author image={team2} name="Hostel E" hostelName='"N-Hostels"' />,
@@ -278,18 +324,23 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDButton
-            // component={Link}
-            // to={action.route}
-            variant="outlined"
-            onClick={handleClickOpen}
-            size="small"
-            color="success"
-          >
-            BOOK
-          </MDButton>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
       {
         author: <Author image={team2} name="Hostel F" hostelName='"P-Hostels"' />,
@@ -303,11 +354,23 @@ export default function data() {
             Yesterday
           </MDTypography>
         ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            BOOK
-          </MDTypography>
-        ),
+        action:
+          user.booked_room !== "booked" ? (
+            <MDButton
+              // component={Link}
+              // to={action.route}
+              variant="outlined"
+              onClick={handleClickOpen}
+              size="small"
+              color="success"
+            >
+              BOOK
+            </MDButton>
+          ) : (
+            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+              BOOK
+            </MDTypography>
+          ),
       },
     ],
   };

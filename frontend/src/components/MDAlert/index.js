@@ -16,8 +16,16 @@ import MDBox from "components/MDBox";
 // Custom styles for the MDAlert
 import MDAlertRoot from "components/MDAlert/MDAlertRoot";
 import MDAlertCloseIcon from "components/MDAlert/MDAlertCloseIcon";
+import MDButton from "components/MDButton";
 
-function MDAlert({ color, dismissible, children, ...rest }) {
+function MDAlert({
+  color,
+  dismissible,
+  children,
+  handleClickOpen = () => console.log("a"),
+  complain = {},
+  ...rest
+}) {
   const [alertStatus, setAlertStatus] = useState("mount");
 
   const handleAlertStatus = () => setAlertStatus("fadeOut");
@@ -31,7 +39,14 @@ function MDAlert({ color, dismissible, children, ...rest }) {
         </MDBox>
         {dismissible ? (
           <MDAlertCloseIcon onClick={mount ? handleAlertStatus : null}>&times;</MDAlertCloseIcon>
-        ) : null}
+        ) : (
+          <MDButton
+            styles={{ color: "white", backgroundColor: "black", float: "right" }}
+            onClick={() => handleClickOpen(complain.from_id)}
+          >
+            Reply
+          </MDButton>
+        )}
       </MDAlertRoot>
     </Fade>
   );

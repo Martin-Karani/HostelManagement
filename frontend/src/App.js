@@ -44,8 +44,6 @@ import brandWhite from "assets/images/logo-ct.png";
 // import Home from "home";
 import Cover from "layouts/authentication/reset-password/cover";
 import SignIn from "layouts/authentication/sign-in";
-import MDBox from "components/MDBox";
-import { Icon } from "@mui/material";
 import FormComplains from "FormComplains";
 
 export default function App() {
@@ -56,7 +54,6 @@ export default function App() {
     layout,
     sidenavColor,
     transparentSidenav,
-
     whiteSidenav,
     darkMode,
   } = controller;

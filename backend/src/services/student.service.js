@@ -19,6 +19,20 @@ async function getMultiple(page = 1) {
     meta,
   };
 }
+async function getNotices() {
+  const result = await db.query(
+    `SELECT notice_details, notice_title 
+    FROM notice `
+  );
+  return result;
+}
+async function getComplains() {
+  const result = await db.query(
+    `SELECT complain, from_id 
+    FROM complains `
+  );
+  return result;
+}
 
 async function getStudent(email) {
   const result = await db.query(
@@ -28,6 +42,35 @@ async function getStudent(email) {
   );
 
   return result[0];
+}
+
+async function message(props) {
+  console.log(props);
+  const result = await db.query(
+    `INSERT INTO messages (message, from_id, to_id, created_at)
+    VALUES (?,?,?,?)`,
+    [
+      props.message,
+      props.student_id.toString(),
+      props.to_id.toString(),
+      new Date().toISOString().slice(0, 19).replace("T", " "),
+    ]
+  );
+  let message = "Error in sending Message";
+
+  if (result.affectedRows) {
+    message = "sent message successfully";
+  }
+  return { message };
+}
+async function messages(id) {
+  console.log(id);
+  const result = await db.query(
+    `SELECT message, from_id, created_at 
+    FROM messages WHERE to_id=?`,
+    [id]
+  );
+  return result;
 }
 async function login({ email, password }) {
   const user = await db.query(
@@ -51,8 +94,9 @@ async function bookBed({ email, room_id }) {
   const student = await getStudent(email);
   if (!student) return { error: "Student not in the system" };
   console.log(student);
-  if (student.bookedRoom !== null)
+  if (student.bookedRoom !== undefined)
     return { error: "Student Already Has Booked the room" };
+
   const resultStudent = await db.query(
     `UPDATE students 
       SET bookedRoom=?, 
@@ -60,10 +104,10 @@ async function bookBed({ email, room_id }) {
     [room_id, email]
   );
   const result = await db.query(
-    ` UPDATE rooms 
-    SET booked=?,booked_by=?
-    WHERE room_id=?`,
-    [true, student.student_id, room_id]
+    `UPDATE rooms 
+     SET booked=?
+     WHERE room_id=?`,
+    [true, room_id]
   );
   let message = "Error in booking";
 
@@ -74,20 +118,18 @@ async function bookBed({ email, room_id }) {
   return message;
 }
 async function createComplain({ student, complain }) {
+  console.log(complain);
   const result = await db.query(
-    `INSERT INTO complains (complain, from, created_at)
+    `INSERT INTO complains (complain, from_id, created_at)
     VALUES (?,?,?)`,
-    [
-      complain,
-      student.student_id,
-      new Date().toISOString().slice(0, 19).replace("T", " "),
-    ]
+    [complain, student, new Date().toISOString().slice(0, 19).replace("T", " ")]
   );
   let message = "Error in creating Complain";
 
   if (result.affectedRows) {
     message = "create complain successfully";
   }
+  return { message };
 }
 async function create(student) {
   const studentExists = await getStudent(student.email);
@@ -170,7 +212,11 @@ async function remove(id) {
 module.exports = {
   getMultiple,
   create,
+  message,
+  messages,
   update,
+  getNotices,
+  getComplains,
   remove,
   bookBed,
   createComplain,

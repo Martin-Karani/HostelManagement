@@ -4,7 +4,7 @@ const config = require("../configs/general.config");
 
 async function getRooms() {
   const result = await db.query(
-    `SELECT room_id, hostel_name, room_no, booked, booked_by
+    `SELECT room_id, hostel_name, room_no, booked
     FROM rooms `
   );
   return result;
@@ -19,7 +19,6 @@ async function getComplains() {
 }
 
 async function createNotice({ noticeTitle, notice_details }) {
-  console.log(student);
   const result = await db.query(
     `INSERT INTO notice
     (notice_title, notice_details, created_at)

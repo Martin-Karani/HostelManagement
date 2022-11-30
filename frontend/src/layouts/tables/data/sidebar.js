@@ -1,17 +1,14 @@
 import "./sidebar.css";
 import SidebarLink from "./SidebarLink";
 
-function Sidebar() {
+function Sidebar({ rooms, setSelectedRoom }) {
   return (
     <div className="sidebar">
-      <SidebarLink text="Room 1" />
-      <SidebarLink text="Room 5" />
-      <SidebarLink text="Room 91" />
-      <SidebarLink text="Room 6" />
-      <SidebarLink text="Room 5" />
-      <SidebarLink text="Room 8" />
-      <SidebarLink text="Room 18" />
-      <SidebarLink text="Room 84" />
+      <SidebarLink text="Room 1" setSelectedRoom={setSelectedRoom} />
+      <SidebarLink text="Room 2" setSelectedRoom={setSelectedRoom} />
+      <SidebarLink text="Room 3" setSelectedRoom={setSelectedRoom} />
+      <SidebarLink text="Room 4" setSelectedRoom={setSelectedRoom} />
+      <SidebarLink text="Room 5" setSelectedRoom={setSelectedRoom} />
     </div>
   );
 }

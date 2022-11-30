@@ -40,11 +40,11 @@ function Cover() {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
-  useEffect(() => {
-    if (user && !user.is_admin) {
-      navigate("/dashboard");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user && !user.is_admin) {
+  //     // navigate("/dashboard");
+  //   }
+  // }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);

@@ -18,11 +18,22 @@ import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // Data
 
 function Overview() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/student/messages", { params: { id: user.student_id } })
+      .then((response) => {
+        setMessages(response.data);
+      });
+  }, []);
+  console.log({ messages });
   return (
     <DashboardLayout>
       <DashboardNavbar />

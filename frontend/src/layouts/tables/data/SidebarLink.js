@@ -1,9 +1,11 @@
+import { useState } from "react";
 import "./sidebarLink.css";
 
-function SidebarLink({ text }) {
+function SidebarLink({ text, setSelectedRoom }) {
+  const [active, setActive] = useState("");
   return (
-    <div className="link">
-      <h5>{text}</h5>
+    <div className="link" onClick={setSelectedRoom(text)}>
+      <h5 onClick={() => setActive(text)}>{text}</h5>
     </div>
   );
 }

@@ -20,10 +20,25 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import Projects from "layouts/dashboard/components/Projects";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import axios from "axios";
+import React from "react";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
+  const [input, setInput] = React.useState({
+    notice_details: "",
+    noticeTitle: "",
+  });
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const results = await axios.post("http://localhost:4000/admin/createNotice", {
+      notice_details: input.notice_details,
+      noticeTitle: input.noticeTitle,
+    });
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -109,9 +124,8 @@ function Dashboard() {
                     type="text"
                     label="Notice Title"
                     fullWidth
-
-                    // value='{input.email}'
-                    // onChange={(e) => setInput({ ...input, email: e.target.value })}
+                    value={input.noticeTitle}
+                    onChange={(e) => setInput({ ...input, noticeTitle: e.target.value })}
                   />
                 </MDBox>
                 <MDBox mb={2}>
@@ -119,13 +133,12 @@ function Dashboard() {
                     type="text"
                     label="Notice Details"
                     fullWidth
-
-                    // value='{input.email}'
-                    // onChange={(e) => setInput({ ...input, email: e.target.value })}
+                    value={input.notice_details}
+                    onChange={(e) => setInput({ ...input, notice_details: e.target.value })}
                   />
                 </MDBox>
                 <MDBox mt={4} mb={1}>
-                  <MDButton variant="gradient" color="info" fullWidth>
+                  <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                     Create a Notice
                   </MDButton>
                 </MDBox>
